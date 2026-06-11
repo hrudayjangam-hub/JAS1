@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -41,8 +42,13 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.use((req, res) => {
-  res.status(404).json({ message: `Route ${req.originalUrl} not found` });
+const clientDist = path.join(__dirname, '..', 'client', 'dist');
+app.use(express.static(clientDist));
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ message: `Route ${req.originalUrl} not found` });
+  }
+  res.sendFile(path.join(clientDist, 'index.html'));
 });
 
 app.use((err, req, res, next) => {

@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: jas1-server
+    name: jas1
     env: node
     region: oregon
-    buildCommand: npm --prefix server install
-    startCommand: npm --prefix server start
+    buildCommand: cd server && npm install && cd ../client && npm install && npm run build
+    startCommand: cd server && npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -14,15 +14,3 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
-      - key: CLIENT_URL
-        value: https://jas1-server.onrender.com
-
-  - type: web
-    name: jas1-client
-    env: static
-    region: oregon
-    buildCommand: npm --prefix client install && npm --prefix client run build
-    staticPublishPath: ./client/dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://jas1-server.onrender.com/api
