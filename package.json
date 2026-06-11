@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "JAS1 Gaming Platform - Play free online games",
   "scripts": {
+    "postinstall": "cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "start": "node server/index.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "build": "cd client && npm run build",
-    "start": "cd server && npm start",
     "install:all": "cd server && npm install && cd ../client && npm install",
     "setup": "npm run install:all"
   },
