@@ -3,9 +3,8 @@ services:
     name: jas1-server
     env: node
     region: oregon
-    rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm --prefix server install
+    startCommand: npm --prefix server start
     envVars:
       - key: NODE_ENV
         value: production
@@ -22,9 +21,8 @@ services:
     name: jas1-client
     env: static
     region: oregon
-    rootDir: client
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    buildCommand: npm --prefix client install && npm --prefix client run build
+    staticPublishPath: ./client/dist
     envVars:
       - key: VITE_API_URL
         value: https://jas1-server.onrender.com/api
